@@ -124,7 +124,7 @@ session_start();
                                                     <div class="row g-3 mb-3">
                                                         <div class="col">
                                                             <label class="form-label">Bobot</label>
-                                                            <input class="form-control" name="bobot" type="number"
+                                                            <input class="form-control" name="bobot" type="float"
                                                                 value="<?php echo $row1['bobot'] ?>" />
                                                         </div>
                                                         <div class="col">
