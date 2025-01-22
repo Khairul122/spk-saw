@@ -49,7 +49,7 @@ session_start();
                             <div class="row g-3 mb-3">
                                 <div class="col">
                                     <label class="form-label">Bobot</label>
-                                    <input class="form-control" name="bobot" type="number" step="0.01" required />
+                                    <input class="form-control" name="bobot" type="float" step="0.01" required />
                                 </div>
                                 <div class="col">
                                     <label class="form-label">Jenis</label>
@@ -115,7 +115,7 @@ session_start();
                                             <h5 class="modal-title">Edit Kriteria</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form action="edit_kriteria.php" method="post">
+                                        <form method="post" action="edit_kriteria.php" >
                                             <div class="modal-body">
                                                 <div class="mb-3">
                                                     <label class="form-label">ID</label>
@@ -128,7 +128,7 @@ session_start();
                                                 <div class="row g-3 mb-3">
                                                     <div class="col">
                                                         <label class="form-label">Bobot</label>
-                                                        <input class="form-control" name="bobot" type="number" step="0.01" value="<?php echo htmlspecialchars($row['bobot']); ?>" required />
+                                                        <input class="form-control" name="bobot" type="float" step="0.01" value="<?php echo htmlspecialchars($row['bobot']); ?>" required />
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label">Jenis</label>
