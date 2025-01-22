@@ -44,8 +44,8 @@ $pdf->Ln(5);
 $pdf->SetFont('helvetica', 'B', 10);
 
 // Header Tabel
-$w = array(15, 85, 30, 45); // Lebar kolom
-$header = array('No', 'Nama', 'Nilai', 'Rangking');
+$w = array(15, 70, 25, 40, 25); // Lebar kolom disesuaikan
+$header = array('No', 'Nama', 'Nilai', 'Keterangan', 'Rangking');
 
 // Warna header
 $pdf->SetFillColor(210, 210, 210);
@@ -79,11 +79,14 @@ $no = 1;
 $ranking = 1;
 $fill = false;
 
-while($row = mysqli_fetch_array($result)) {    
+while($row = mysqli_fetch_array($result)) {
+    $keterangan = ($row['nilai_akhir'] >= 0.5) ? 'Layak' : 'Tidak Layak';
+    
     $pdf->Cell($w[0], 6, $no++, 1, 0, 'C', $fill);
     $pdf->Cell($w[1], 6, $row['nama'], 1, 0, 'L', $fill);
     $pdf->Cell($w[2], 6, number_format($row['nilai_akhir'], 2), 1, 0, 'C', $fill);
-    $pdf->Cell($w[3], 6, $ranking++, 1, 0, 'C', $fill);
+    $pdf->Cell($w[3], 6, $keterangan, 1, 0, 'C', $fill);
+    $pdf->Cell($w[4], 6, $ranking++, 1, 0, 'C', $fill);
     $pdf->Ln();
     $fill = !$fill;
 }
