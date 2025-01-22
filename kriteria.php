@@ -20,164 +20,149 @@ session_start();
 </head>
 
 <body class="bg-light">
-    <?php
-    include('navbar.php');
-    ?>
-    <main class="container py-5">
-        <form class="card mb-3" method="post" action="tambah_kriteria.php">
-            <h2 class="card-header py-5 text-center">TAMBAH KRITERIA</h2>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label class="form-label">ID</label>
-                    <input class="form-control" name="id" type="text" />
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Kriteria</label>
-                    <input class="form-control" name="kriteria" type="text" />
-                </div>
-                <div class="row g-3 mb-3">
-                    <div class="col">
-                        <label class="form-label">Bobot</label>
-                        <input class="form-control" name="bobot" type="float" />
-                    </div>
-                    <div class="col">
-                        <label class="form-label">Jenis</label>
-                        <select class="form-select" name="jenis">
-                            <option value="benefit">benefit</option>
-                            <option value="cost">cost</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="bi bi-save-fill"></i>
-                    Simpan</button>
-            </div>
-        </form>
+    <?php include('navbar.php'); ?>
 
+    <main class="container py-5">
+        <!-- Button to Trigger Add Modal -->
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addModal">
+            <i class="bi bi-plus-circle"></i> Tambah Kriteria
+        </button>
+
+        <!-- Add Modal -->
+        <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Tambah Kriteria</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="tambah_kriteria.php" method="post">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">ID</label>
+                                <input class="form-control" name="id" type="text" required />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Kriteria</label>
+                                <input class="form-control" name="kriteria" type="text" required />
+                            </div>
+                            <div class="row g-3 mb-3">
+                                <div class="col">
+                                    <label class="form-label">Bobot</label>
+                                    <input class="form-control" name="bobot" type="number" step="0.01" required />
+                                </div>
+                                <div class="col">
+                                    <label class="form-label">Jenis</label>
+                                    <select class="form-select" name="jenis" required>
+                                        <option value="benefit">benefit</option>
+                                        <option value="cost">cost</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kriteria Table -->
         <div class="card">
-            <h2 class="card-header py-5 text-center">TABEL KRITERIA</h2>
+            <h2 class="card-header py-4 text-center">TABEL KRITERIA</h2>
             <div class="card-body">
                 <table class="table nowrap" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Kriteria</th>
-                            <th scope="col">Bobot</th>
-                            <th scope="col">Jenis</th>
-                            <th scope="col">Aksi</th>
+                            <th>ID</th>
+                            <th>Kriteria</th>
+                            <th>Bobot</th>
+                            <th>Jenis</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-
                         include('koneksi.php');
-
                         $sql = 'SELECT * FROM kriteria';
                         $result = mysqli_query($conn, $sql);
 
-                        $i = 1;
                         while ($row = mysqli_fetch_array($result)) {
-
                         ?>
-
                             <tr>
-                                <th scope="row"><?php echo $row['id'] ?></th>
-                                <td><?php echo $row['nama'] ?></td>
-                                <td><?php echo $row['bobot'] ?></td>
-                                <td><?php echo $row['jenis'] ?></td>
-                                <td><a type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#modalEdit<?php echo $row['id']; ?>"><i
-                                            class="bi bi-pencil-square"></i> Edit</a>
-                                    <a class="btn btn-danger" href="hapus_kriteria.php?id=<?php echo $row['id'] ?>"
-                                        onclick="return confirm('Apakah anda ingin menghapus kriteria <?php echo $row['nama'] ?>')"><i
-                                            class="bi bi-trash-fill"></i> Hapus</a>
+                                <td><?php echo htmlspecialchars($row['id']); ?></td>
+                                <td><?php echo htmlspecialchars($row['nama']); ?></td>
+                                <td><?php echo htmlspecialchars($row['bobot']); ?></td>
+                                <td><?php echo htmlspecialchars($row['jenis']); ?></td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEdit<?php echo $row['id']; ?>">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </button>
+                                    <a class="btn btn-danger btn-sm" href="hapus_kriteria.php?id=<?php echo $row['id']; ?>"
+                                        onclick="return confirm('Apakah anda ingin menghapus kriteria <?php echo $row['nama']; ?>')">
+                                        <i class="bi bi-trash-fill"></i> Hapus
+                                    </a>
                                 </td>
                             </tr>
 
                             <!-- Modal Edit -->
-                            <div class="modal fade" id="modalEdit<?php echo $row['id']; ?>" tabindex="-1"
-                                aria-labelledby="modelEditLabel" aria-hidden="true">
+                            <div class="modal fade" id="modalEdit<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Edit Kriteria</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                                            <h5 class="modal-title">Edit Kriteria</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form method="post" action="edit_kriteria.php">
+                                        <form action="edit_kriteria.php" method="post">
                                             <div class="modal-body">
-                                                <?php
-                                                $id = $row['id'];
-                                                $sql1 = "SELECT * FROM kriteria WHERE id = '$id'";
-                                                $result1 = mysqli_query($conn, $sql1);
-                                                while ($row1 = mysqli_fetch_array($result1)) {
-                                                ?>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">ID</label>
-                                                        <input class="form-control" name="id" type="text"
-                                                            value="<?php echo $row1['id']; ?>" readonly />
+                                                <div class="mb-3">
+                                                    <label class="form-label">ID</label>
+                                                    <input class="form-control" name="id" type="text" value="<?php echo htmlspecialchars($row['id']); ?>" readonly />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Kriteria</label>
+                                                    <input class="form-control" name="kriteria" type="text" value="<?php echo htmlspecialchars($row['nama']); ?>" required />
+                                                </div>
+                                                <div class="row g-3 mb-3">
+                                                    <div class="col">
+                                                        <label class="form-label">Bobot</label>
+                                                        <input class="form-control" name="bobot" type="number" step="0.01" value="<?php echo htmlspecialchars($row['bobot']); ?>" required />
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Kriteria</label>
-                                                        <input class="form-control" name="kriteria" type="text"
-                                                            value="<?php echo $row1['nama']; ?>" />
+                                                    <div class="col">
+                                                        <label class="form-label">Jenis</label>
+                                                        <select class="form-select" name="jenis" required>
+                                                            <option value="benefit" <?php echo ($row['jenis'] == 'benefit') ? 'selected' : ''; ?>>benefit</option>
+                                                            <option value="cost" <?php echo ($row['jenis'] == 'cost') ? 'selected' : ''; ?>>cost</option>
+                                                        </select>
                                                     </div>
-                                                    <div class="row g-3 mb-3">
-                                                        <div class="col">
-                                                            <label class="form-label">Bobot</label>
-                                                            <input class="form-control" name="bobot" type="float"
-                                                                value="<?php echo $row1['bobot'] ?>" />
-                                                        </div>
-                                                        <div class="col">
-                                                            <label class="form-label">Jenis</label>
-                                                            <select class="form-select" name="jenis">
-                                                                <option value="benefit" <?php if ($row1['jenis'] == 'benefit') {
-                                                                                            echo 'selected';
-                                                                                        } ?>>benefit</option>
-                                                                <option value="cost" <?php if ($row1['jenis'] == 'cost') {
-                                                                                            echo 'selected';
-                                                                                        } ?>>cost</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                <?php
-                                                }
-                                                ?>
+                                                </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" name="update" class="btn btn-primary">Update</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                <button type="submit" class="btn btn-primary">Update</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-
                         <?php
-
                         }
-
                         ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </main>
-    <?php
-
-    ?>
 
     <script src="assets/js/bootstrap.min.js"></script>
     <script>
-        $('document').ready(function() {
+        $(document).ready(function() {
             $('.table').DataTable({
-                responsive: true,
-                columnDefs: [{
-                    responsivePriority: 1,
-                    targets: 0
-                }, ]
-            })
-        })
+                responsive: true
+            });
+        });
     </script>
 </body>
 

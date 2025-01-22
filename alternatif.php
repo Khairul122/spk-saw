@@ -20,46 +20,62 @@ session_start();
     <?php include('navbar.php'); ?>
 
     <main class="container py-5">
-        <form class="card mb-4" method="post" action="tambah_alternatif.php">
-            <h2 class="card-header py-4 text-center bg-primary text-white">TAMBAH DATA ALTERNATIF</h2>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label class="form-label">Nama</label>
-                    <input class="form-control" name="nama" type="text" required />
+        <!-- Button to trigger Add Modal -->
+        <button class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#addModal">
+            <i class="bi bi-plus-circle"></i> Tambah Data Alternatif
+        </button>
+
+        <!-- Add Modal -->
+        <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Tambah Data Alternatif</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form action="tambah_alternatif.php" method="post">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Nama</label>
+                                <input class="form-control" name="nama" type="text" required />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Jenis Kelamin</label>
+                                <select class="form-select" name="jenis_kelamin" required>
+                                    <option value="">Pilih Jenis Kelamin</option>
+                                    <option value="L">Laki-laki</option>
+                                    <option value="P">Perempuan</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Tanggal Lahir</label>
+                                <input class="form-control" name="tanggal_lahir" type="date" required />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Status</label>
+                                <input class="form-control" name="status" type="text" required />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Pekerjaan</label>
+                                <input class="form-control" name="pekerjaan" type="text" required />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Alamat</label>
+                                <textarea class="form-control" name="alamat" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">No Telepon</label>
+                                <input class="form-control" name="no_telp" type="text" required />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary">Simpan Data</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Jenis Kelamin</label>
-                    <select class="form-select" name="jenis_kelamin" required>
-                        <option value="">Pilih Jenis Kelamin</option>
-                        <option value="L">Laki-laki</option>
-                        <option value="P">Perempuan</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Tanggal Lahir</label>
-                    <input class="form-control" name="tanggal_lahir" type="date" required />
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Status</label>
-                    <input class="form-control" name="status" type="text" required />
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Pekerjaan</label>
-                    <input class="form-control" name="pekerjaan" type="text" required />
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Alamat</label>
-                    <textarea class="form-control" name="alamat" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">No Telepon</label>
-                    <input class="form-control" name="no_telp" type="text" required />
-                </div>
-                <button type="submit" class="btn btn-primary w-100">
-                    <i class="bi bi-save-fill"></i> Simpan Data
-                </button>
             </div>
-        </form>
+        </div>
 
         <div class="card">
             <h2 class="card-header text-center py-4 bg-primary text-white">DATA ALTERNATIF</h2>
@@ -105,7 +121,6 @@ session_start();
                                         </a>
                                     </td>
                                 </tr>
-
                                 <!-- Modal Edit -->
                                 <div class="modal fade" id="editModal<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog">
